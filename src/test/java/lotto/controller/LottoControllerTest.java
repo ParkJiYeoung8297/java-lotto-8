@@ -5,6 +5,7 @@ import lotto.exception.ErrorMessage;
 import lotto.service.LottoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
@@ -31,8 +32,8 @@ class LottoControllerTest extends NsTest{
                             "[13, 14, 16, 38, 42, 45]",
                             "[7, 11, 30, 40, 42, 43]",
                             "[2, 13, 22, 32, 38, 45]",
-                            "[1, 3, 5, 14, 22, 45]"
-//                            "당첨 번호를 입력해 주세요.",
+                            "[1, 3, 5, 14, 22, 45]",
+                            "당첨 번호를 입력해 주세요."
 //                            "보너스 번호를 입력해 주세요.",
 //                            "당첨 통계",
 //                            "---",
@@ -87,6 +88,24 @@ class LottoControllerTest extends NsTest{
         assertSimpleTest(() -> {
             runException("12030");
             assertThat(output()).contains(ErrorMessage.INVALID_PRICE_UNIT.getMessage());
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    void 당첨로또_공백_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000",text);
+            assertThat(output()).contains(ErrorMessage.IS_NULL_ERROR.getMessage());
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1,2,3,4,5,5,6", "1", "1,2"})
+    void 당첨로또_길이_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000",text);
+            assertThat(output()).contains(ErrorMessage.IS_NULL_ERROR.getMessage());
         });
     }
 
