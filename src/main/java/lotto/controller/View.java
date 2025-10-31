@@ -3,7 +3,9 @@ package lotto.controller;
 import camp.nextstep.edu.missionutils.Console;
 import lotto.exception.ErrorMessage;
 import lotto.exception.Validator;
+import lotto.service.LottoDto;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class View {
@@ -15,12 +17,22 @@ public class View {
         return message;
     }
 
+    public void printRandomLottos(LottoDto lottoDto){
+        printMessage(String.format(Message.PRINT_LOTTO_COUNT, lottoDto.getCount()));
+        for (List<Integer> lotto : lottoDto.getRandomLottos()){
+            printIntegerList(lotto);
+        }
+    }
+
     private String getInputMessage(){
         return Console.readLine();
     }
 
     protected void printMessage(String message){
         System.out.println(message);
+    }
+    protected void printIntegerList(List<Integer> lotto){
+        System.out.println(lotto);
     }
 
     private String getNotNullMessage(){
