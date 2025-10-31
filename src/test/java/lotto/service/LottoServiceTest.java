@@ -1,4 +1,5 @@
 package lotto.service;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,15 +15,15 @@ class LottoServiceTest {
         LottoService lottoService = new LottoService();
         assertRandomUniqueNumbersInRangeTest(
                 () -> {
-                List<List<Integer>> result = lottoService.generateRandomLottos(5000);
+                LottoDto result = lottoService.generateRandomLottos(5000);
                 List<List<Integer>> expected = new ArrayList<>();
                 expected.add(List.of(8, 21, 23, 41, 42, 43));
                 expected.add(List.of(3, 5, 11, 16, 32, 38));
                 expected.add(List.of(7, 11, 16, 35, 36, 44));
                 expected.add(List.of(1, 8, 11, 31, 41, 42));
                 expected.add(List.of(13, 14, 16, 38, 42, 45));
-                assertThat(result).containsExactlyElementsOf(expected);
-
+                assertThat(result.getRandomLottos()).containsExactlyElementsOf(expected);
+                Assertions.assertEquals(5, result.getCount());
                 },
                 List.of(8, 21, 23, 41, 42, 43),
                 List.of(3, 5, 11, 16, 32, 38),
