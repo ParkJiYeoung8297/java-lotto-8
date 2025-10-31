@@ -19,6 +19,7 @@ public class LottoController {
     public void doLotto(){
         purchaseLotto();
         inputTargetLotto();
+        inputBonusNumber();
     }
 
     public void purchaseLotto(){
@@ -44,6 +45,17 @@ public class LottoController {
         }
     }
 
+    public void inputBonusNumber(){
+        Integer number = null;
+        int count = 1;
+        while (number == null && count <= 5){
+            number = getBonusNumber();
+            count++;
+        }
+        if (number != null){
+        }
+    }
+
     private Integer getPurchasePrice(){
         try {
             return Integer.parseInt(view.requestPurchasePrice());
@@ -60,6 +72,16 @@ public class LottoController {
             Validator.validateTargetLottoLength(numbers);
 
             return numbers;
+        }catch(IllegalArgumentException e)
+        {
+            view.printMessage(e.getMessage());
+            return null;
+        }
+    }
+
+    private Integer getBonusNumber(){
+        try {
+            return Integer.parseInt(view.requestBonusNumber());
         }catch(IllegalArgumentException e)
         {
             view.printMessage(e.getMessage());

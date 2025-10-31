@@ -23,6 +23,12 @@ public class View {
         return message;
     }
 
+    public String requestBonusNumber(){
+        printMessage(Message.REQUEST_BONUS_NUMBER);
+        String message = getNotNullMessage();
+        return message;
+    }
+
     public void printRandomLottos(LottoDto lottoDto){
         printMessage(String.format(Message.PRINT_LOTTO_COUNT, lottoDto.getCount()));
         for (List<Integer> lotto : lottoDto.getRandomLottos()){
