@@ -6,7 +6,7 @@ public class LottoController {
     private static final String splitDelimeter=",";
 
     public LottoController(View view){
-        this.view=view;
+        this.view = view;
     }
 
     public void doLotto(){
@@ -14,7 +14,23 @@ public class LottoController {
     }
 
     public void purchaseLotto(){
-        Integer price = Integer.parseInt(view.requestPurchasePrice());
+        Integer price = null;
+        int count = 1;
+        while (price == null && count <= 5){
+            price = getPurchasePrice();
+            count++;
+        }
+
+    }
+
+    public Integer getPurchasePrice(){
+        try {
+            return Integer.parseInt(view.requestPurchasePrice());
+        }catch(IllegalArgumentException e)
+        {
+            view.printMessage(e.getMessage());
+            return null;
+        }
     }
 
 

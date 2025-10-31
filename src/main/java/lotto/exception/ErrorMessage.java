@@ -10,9 +10,9 @@ public enum ErrorMessage {
     NOT_NUMBER_ERROR("[ERROR] 값은 숫자여야합니다."),
     LOTTO_NUMBER_LENGTH_ERROR("[ERROR] 로또 번호는 6개여야 합니다.");
 
-    private String message;
+    private final String message;
 
-    private ErrorMessage(String message){
+    ErrorMessage(String message){
         this.message=message;
     }
 
