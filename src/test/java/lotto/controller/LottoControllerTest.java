@@ -5,7 +5,6 @@ import lotto.exception.ErrorMessage;
 import lotto.service.LottoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
@@ -33,8 +32,8 @@ class LottoControllerTest extends NsTest{
                             "[7, 11, 30, 40, 42, 43]",
                             "[2, 13, 22, 32, 38, 45]",
                             "[1, 3, 5, 14, 22, 45]",
-                            "당첨 번호를 입력해 주세요."
-//                            "보너스 번호를 입력해 주세요.",
+                            "당첨 번호를 입력해 주세요.",
+                            "보너스 번호를 입력해 주세요."
 //                            "당첨 통계",
 //                            "---",
 //                            "3개 일치 (5,000원) - 1개",
@@ -71,7 +70,8 @@ class LottoControllerTest extends NsTest{
         assertSimpleTest(() -> {
             runException(text);
             assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
-        });
+            }
+        );
     }
 
     @ParameterizedTest
@@ -105,9 +105,28 @@ class LottoControllerTest extends NsTest{
     void 당첨로또_길이_예외_테스트(String text) {
         assertSimpleTest(() -> {
             runException("8000",text);
+            assertThat(output()).contains(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    void 보너스번호_공백_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000","1,2,3,4,5,6",text);
             assertThat(output()).contains(ErrorMessage.IS_NULL_ERROR.getMessage());
         });
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"s", "ㄴ"})
+    void 보너스번호_숫자아님_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000","1,2,3,4,5,6",text);
+            assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
+        });
+    }
+
 
     @Override
     public void runMain() {
