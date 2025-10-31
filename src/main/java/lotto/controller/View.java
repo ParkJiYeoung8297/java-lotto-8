@@ -17,6 +17,13 @@ public class View {
         return message;
     }
 
+    public String requestTargetLotto(){
+        printMessage(Message.REQUEST_TARGET_LOTTO);
+        String message = getNotNullMessage();
+        Validator.validateTargetLotto(message);
+        return message;
+    }
+
     public void printRandomLottos(LottoDto lottoDto){
         printMessage(String.format(Message.PRINT_LOTTO_COUNT, lottoDto.getCount()));
         for (List<Integer> lotto : lottoDto.getRandomLottos()){
@@ -38,7 +45,6 @@ public class View {
     private String getNotNullMessage(){
         try{
             String message = getInputMessage();
-            Validator.validateNotEmptyValue(message);
             return message;
         } catch(NoSuchElementException e){
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_ERROR.getMessage());

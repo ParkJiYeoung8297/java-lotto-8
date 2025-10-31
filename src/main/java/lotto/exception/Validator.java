@@ -4,9 +4,15 @@ public final class Validator {
     private Validator(){}
 
     public static void validatePurchasePrice(String message){
+        Validator.validateNotEmptyValue(message);
         Integer value = validateIntegerValue(message);
         validateOverMinimumMoney(value);
         validateThousandUnitMoney(value);
+    }
+
+    public static void validateTargetLotto(String message){
+        Validator.validateNotEmptyValue(message);
+
     }
 
 

@@ -2,6 +2,8 @@ package lotto.controller;
 
 import lotto.service.LottoService;
 
+import java.util.List;
+
 public class LottoController {
 
     private final View view;
@@ -15,6 +17,7 @@ public class LottoController {
 
     public void doLotto(){
         purchaseLotto();
+        inputTargetLotto();
     }
 
     public void purchaseLotto(){
@@ -27,10 +30,20 @@ public class LottoController {
         if (price != null){
             view.printRandomLottos(lottoService.generateRandomLottos(price));
         }
-
     }
 
-    public Integer getPurchasePrice(){
+    public void inputTargetLotto(){
+        String numbers = null;
+        int count = 1;
+        while (numbers == null && count <= 5){
+            numbers = getTargetLotto();
+            count++;
+        }
+        if (numbers != null){
+        }
+    }
+
+    private Integer getPurchasePrice(){
         try {
             return Integer.parseInt(view.requestPurchasePrice());
         }catch(IllegalArgumentException e)
@@ -39,6 +52,18 @@ public class LottoController {
             return null;
         }
     }
+
+    private String getTargetLotto(){
+        try {
+            return view.requestTargetLotto();
+        }catch(IllegalArgumentException e)
+        {
+            view.printMessage(e.getMessage());
+            return null;
+        }
+    }
+
+
 
 
 }
