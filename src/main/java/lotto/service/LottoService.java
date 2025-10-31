@@ -5,17 +5,16 @@ import java.util.List;
 
 public class LottoService {
 
-
-    public List<List<Integer>> generateRandomLottos(int price){
+    public LottoDto generateRandomLottos(int price){
         List<List<Integer>> randomLottos=new ArrayList<>();
-
-        for (int i=1; i <= calculateLottoCount(price);i++){
+        int amount = calculateLottoCount(price);
+        for (int i=1; i <= amount;i++){
             randomLottos.add(RandomGenerator.getRandomLottoNumber());
         }
-        return randomLottos;
+        return new LottoDto(randomLottos, amount);
     }
 
-    public int calculateLottoCount(int price){
+    private int calculateLottoCount(int price){
         return price / 1000;
     }
 }
