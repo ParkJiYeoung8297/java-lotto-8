@@ -20,7 +20,6 @@ public class View {
     public String requestTargetLotto(){
         printMessage(Message.REQUEST_TARGET_LOTTO);
         String message = getNotNullMessage();
-        Validator.validateTargetLotto(message);
         return message;
     }
 
@@ -45,6 +44,7 @@ public class View {
     private String getNotNullMessage(){
         try{
             String message = getInputMessage();
+            Validator.validateNotEmptyValue(message);
             return message;
         } catch(NoSuchElementException e){
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_ERROR.getMessage());

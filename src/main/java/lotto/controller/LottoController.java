@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.exception.Validator;
 import lotto.service.LottoService;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class LottoController {
     }
 
     public void inputTargetLotto(){
-        String numbers = null;
+        List<String> numbers = null;
         int count = 1;
         while (numbers == null && count <= 5){
             numbers = getTargetLotto();
@@ -53,9 +54,12 @@ public class LottoController {
         }
     }
 
-    private String getTargetLotto(){
+    private List<String> getTargetLotto(){
         try {
-            return view.requestTargetLotto();
+            List<String> numbers = List.of(view.requestTargetLotto().split(splitDelimeter));
+            Validator.validateTargetLottoLength(numbers);
+
+            return numbers;
         }catch(IllegalArgumentException e)
         {
             view.printMessage(e.getMessage());

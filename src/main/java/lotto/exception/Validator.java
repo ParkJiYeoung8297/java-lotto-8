@@ -1,18 +1,14 @@
 package lotto.exception;
 
+import java.util.List;
+
 public final class Validator {
     private Validator(){}
 
     public static void validatePurchasePrice(String message){
-        Validator.validateNotEmptyValue(message);
         Integer value = validateIntegerValue(message);
         validateOverMinimumMoney(value);
         validateThousandUnitMoney(value);
-    }
-
-    public static void validateTargetLotto(String message){
-        Validator.validateNotEmptyValue(message);
-
     }
 
 
@@ -39,6 +35,13 @@ public final class Validator {
     public static void validateThousandUnitMoney(Integer money){
         if (money % 1000 != 0){
             throw new IllegalArgumentException(ErrorMessage.INVALID_PRICE_UNIT.getMessage());
+        }
+    }
+
+
+    public static void validateTargetLottoLength(List<String> numbers){
+        if (numbers.size() != 6){
+            throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         }
     }
     
