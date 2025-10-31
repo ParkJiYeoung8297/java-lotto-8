@@ -11,7 +11,6 @@ public final class Validator {
         validateThousandUnitMoney(value);
     }
 
-
     public static void validateNotEmptyValue(String message){
         if (message==null || message.isBlank()){
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_ERROR.getMessage());

@@ -70,7 +70,6 @@ public class LottoController {
         try {
             List<String> numbers = List.of(view.requestTargetLotto().split(splitDelimeter));
             Validator.validateTargetLottoLength(numbers);
-
             return numbers;
         }catch(IllegalArgumentException e)
         {

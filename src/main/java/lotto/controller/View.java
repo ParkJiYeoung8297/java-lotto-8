@@ -26,6 +26,7 @@ public class View {
     public String requestBonusNumber(){
         printMessage(Message.REQUEST_BONUS_NUMBER);
         String message = getNotNullMessage();
+        Validator.validateIntegerValue(message);
         return message;
     }
 
