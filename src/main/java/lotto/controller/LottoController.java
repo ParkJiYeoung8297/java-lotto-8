@@ -33,7 +33,6 @@ public class LottoController {
     public void purchaseLotto() {
         Integer price = null;
         int count = 1;
-
         while (price == null && count <= 5) {
             price = getPurchasePrice();
             count++;
@@ -47,7 +46,6 @@ public class LottoController {
     public List<Integer> inputTargetLotto() {
         List<Integer> numbers = null;
         int count = 1;
-
         while (numbers == null && count <= 5) {
             numbers = getTargetLotto();
             count++;
@@ -62,7 +60,6 @@ public class LottoController {
     public Integer inputBonusNumber(List<Integer> targetLotto) {
         Integer number = null;
         int count = 1;
-
         while (number == null && count <= 5) {
             number = getBonusNumber(targetLotto);
             count++;

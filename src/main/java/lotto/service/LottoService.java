@@ -1,7 +1,7 @@
 package lotto.service;
 
 import lotto.domain.Lotto;
-import lotto.domain.Winning;
+import lotto.domain.Record;
 import lotto.util.Constant;
 import lotto.util.RandomGenerator;
 
@@ -26,19 +26,20 @@ public class LottoService {
     }
 
     public ResultDto generateResult(List<Integer> targetLotto, Integer bonusNumber) {
-        Winning winning = new Winning(randomLottos);
-        winning.calculateWinning(targetLotto, bonusNumber);
-        return new ResultDto(winning.getRecord(), winning.calculateWinningRate());
+        ;
+        Record record = Record.buildRecord();
+        record.calculateWinning(targetLotto, bonusNumber, randomLottos);
+        return new ResultDto(record.getPrizeRecord(), record.calculateWinningRate());
     }
 
-    private void addRandomLottos(int amount){
+    private void addRandomLottos(int amount) {
         for (int i = 1; i <= amount; i++) {
             Lotto lotto = makeLotto();
             randomLottos.add(lotto);
         }
     }
 
-    private Lotto makeLotto(){
+    private Lotto makeLotto() {
         return Lotto.buildLotto(RandomGenerator.getRandomLottoNumber());
     }
 

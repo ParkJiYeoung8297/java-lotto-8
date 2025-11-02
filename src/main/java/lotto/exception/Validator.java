@@ -1,7 +1,6 @@
 package lotto.exception;
 
 import lotto.util.Constant;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,20 +54,20 @@ public final class Validator {
         }
     }
 
-    public static void validateNumberInRange(Integer num)  {
-        if (num < Constant.MIN_VALUE || num > Constant.MAX_VALUE){
+    public static void validateNumberInRange(Integer num) {
+        if (num < Constant.MIN_VALUE || num > Constant.MAX_VALUE) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_NOT_IN_RANGE.getMessage());
         }
     }
 
-    public static void validateNumbersAllInRange(List<Integer> numbers)  {
-        for (int num : numbers){
+    public static void validateNumbersAllInRange(List<Integer> numbers) {
+        for (int num : numbers) {
             Validator.validateNotEmptyValue(Integer.toString(num));
             validateNumberInRange(num);
         }
     }
 
-    public static void validateUniqueNumber(List<Integer> numbers)  {
+    public static void validateUniqueNumber(List<Integer> numbers) {
         Set<Integer> nums = new HashSet<>(numbers);
         if (nums.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.NOT_UNIQUE_LOTTO_NUMBER.getMessage());
