@@ -1,17 +1,31 @@
 package lotto.service;
 
+import lotto.domain.Lotto;
+import lotto.domain.Winning;
+import lotto.util.RandomGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LottoService {
+    private List<Lotto> randomLottos = new ArrayList<>();
 
     public LottoDto generateRandomLottos(int price){
-        List<List<Integer>> randomLottos=new ArrayList<>();
         int amount = calculateLottoCount(price);
-        for (int i=1; i <= amount;i++){
-            randomLottos.add(RandomGenerator.getRandomLottoNumber());
+        for (int i=1; i <= amount; i++){
+            Lotto lotto = new Lotto(RandomGenerator.getRandomLottoNumber());
+            randomLottos.add(lotto);
         }
-        return new LottoDto(randomLottos, amount);
+
+        List<List<Integer>> lottoNumbers = randomLottos.stream()
+                .map(Lotto :: getNumbers)
+                .toList();
+        return new LottoDto(lottoNumbers, amount);
+    }
+
+    public ResultDto generateResult(List<Integer> targetLotto, Integer bonusNumber){
+        Winning winning = new Winning(randomLottos);
+        winning.calculateWinning(targetLotto,bonusNumber);
+        return new ResultDto(winning.getRecord(), winning.calculateWinningRate());
     }
 
     private int calculateLottoCount(int price){
