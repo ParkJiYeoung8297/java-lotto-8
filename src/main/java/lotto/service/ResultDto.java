@@ -1,22 +1,21 @@
 package lotto.service;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ResultDto {
     private Map<String, Integer> winningRecord;
     private String returnRate;
 
-    public ResultDto(Map<String, Integer> winningRecord, String returnRate){
+    public ResultDto(Map<String, Integer> winningRecord, String returnRate) {
         this.winningRecord = winningRecord;
-        this.returnRate  = returnRate;
+        this.returnRate = returnRate;
     }
 
-    public Map<String, Integer> getWinningRecord(){
+    public Map<String, Integer> getWinningRecord() {
         return winningRecord;
     }
 
-    public String getReturnRate(){
+    public String getReturnRate() {
         return returnRate;
     }
 }

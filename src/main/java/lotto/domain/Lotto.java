@@ -19,7 +19,7 @@ public class Lotto {
     }
 
     // 숫자 비교
-    public int compareLotto(List<Integer> num){
+    public int compareLotto(List<Integer> num) {
         Set<Integer> targetLotto = new HashSet<>(num);
         Set<Integer> randomLotto = new HashSet<>(numbers);
         targetLotto.retainAll(randomLotto);
@@ -27,8 +27,8 @@ public class Lotto {
     }
 
     // 보너스 번호 맞춤 여부
-    public int checkBonusNumber(Integer bonusNum){
-        if (numbers.contains(bonusNum) == true){
+    public int checkBonusNumber(Integer bonusNum) {
+        if (numbers.contains(bonusNum) == true) {
             return 1;
         }
         return 0;

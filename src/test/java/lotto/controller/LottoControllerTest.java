@@ -13,7 +13,7 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueN
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LottoControllerTest extends NsTest{
+class LottoControllerTest extends NsTest {
     private static final String ERROR_MESSAGE = "[ERROR]";
 
     @Test
@@ -65,17 +65,17 @@ class LottoControllerTest extends NsTest{
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ㄴ", "s","."})
+    @ValueSource(strings = {"ㄴ", "s", "."})
     void 구입금액_숫자아님_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException(text);
-            assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
-            }
+                    runException(text);
+                    assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
+                }
         );
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0","-100","999"})
+    @ValueSource(strings = {"0", "-100", "999"})
     void 구입금액_최소금액미만_예외_테스트(String text) {
         assertSimpleTest(() -> {
             runException(text);
@@ -95,7 +95,7 @@ class LottoControllerTest extends NsTest{
     @ValueSource(strings = {"", " "})
     void 당첨로또_공백_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException("8000",text);
+            runException("8000", text);
             assertThat(output()).contains(ErrorMessage.IS_NULL_ERROR.getMessage());
         });
     }
@@ -104,7 +104,7 @@ class LottoControllerTest extends NsTest{
     @ValueSource(strings = {"1,2,3,4,5,5,6", "1", "1,2"})
     void 당첨로또_길이_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException("8000",text);
+            runException("8000", text);
             assertThat(output()).contains(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         });
     }
@@ -113,7 +113,7 @@ class LottoControllerTest extends NsTest{
     @ValueSource(strings = {"1,s3,4,5,5,6", "1,x,3,3,4,4"})
     void 당첨로또_숫자아님_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException("8000",text);
+            runException("8000", text);
             assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
         });
     }
@@ -122,7 +122,7 @@ class LottoControllerTest extends NsTest{
     @ValueSource(strings = {"", " "})
     void 보너스번호_공백_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException("8000","1,2,3,4,5,6",text);
+            runException("8000", "1,2,3,4,5,6", text);
             assertThat(output()).contains(ErrorMessage.IS_NULL_ERROR.getMessage());
         });
     }
@@ -131,7 +131,7 @@ class LottoControllerTest extends NsTest{
     @ValueSource(strings = {"s", "ㄴ"})
     void 보너스번호_숫자아님_예외_테스트(String text) {
         assertSimpleTest(() -> {
-            runException("8000","1,2,3,4,5,6",text);
+            runException("8000", "1,2,3,4,5,6", text);
             assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
         });
     }

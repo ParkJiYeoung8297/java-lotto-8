@@ -11,60 +11,61 @@ import java.util.NoSuchElementException;
 
 public class View {
 
-    public String requestPurchasePrice(){
+    public String requestPurchasePrice() {
         printMessage(Message.REQUEST_PURCHASE_PRICE);
         String message = getNotNullMessage();
         Validator.validatePurchasePrice(message);
         return message;
     }
 
-    public String requestTargetLotto(){
+    public String requestTargetLotto() {
         printMessage(Message.REQUEST_TARGET_LOTTO);
         String message = getNotNullMessage();
         return message;
     }
 
-    public String requestBonusNumber(){
+    public String requestBonusNumber() {
         printMessage(Message.REQUEST_BONUS_NUMBER);
         String message = getNotNullMessage();
         Validator.validateIntegerValue(message);
         return message;
     }
 
-    public void printRandomLottos(LottoDto lottoDto){
+    public void printRandomLottos(LottoDto lottoDto) {
         printMessage(String.format(Message.PRINT_LOTTO_COUNT, lottoDto.getCount()));
-        for (List<Integer> lotto : lottoDto.getRandomLottos()){
+        for (List<Integer> lotto : lottoDto.getRandomLottos()) {
             printIntegerList(lotto);
         }
     }
 
-    public void printResult(ResultDto resultDto){
+    public void printResult(ResultDto resultDto) {
 
         printMessage(Message.PRINT_RESULT_HEADER);
-        for(String prizeMessage : resultDto.getWinningRecord().keySet()){
+        for (String prizeMessage : resultDto.getWinningRecord().keySet()) {
             int count = resultDto.getWinningRecord().get(prizeMessage);
             printMessage(String.format(Message.PRINT_RESULT_LOTTO, prizeMessage, count));
         }
         printMessage(String.format(Message.PRINT_LOTTO_RETURNS, resultDto.getReturnRate()));
     }
 
-    private String getInputMessage(){
+    private String getInputMessage() {
         return Console.readLine();
     }
 
-    protected void printMessage(String message){
+    void printMessage(String message) {
         System.out.println(message);
     }
-    protected void printIntegerList(List<Integer> lotto){
+
+    void printIntegerList(List<Integer> lotto) {
         System.out.println(lotto);
     }
 
-    private String getNotNullMessage(){
-        try{
+    private String getNotNullMessage() {
+        try {
             String message = getInputMessage();
             Validator.validateNotEmptyValue(message);
             return message;
-        } catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_ERROR.getMessage());
         }
     }

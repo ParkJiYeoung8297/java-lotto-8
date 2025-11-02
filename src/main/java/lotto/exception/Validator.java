@@ -3,45 +3,47 @@ package lotto.exception;
 import java.util.List;
 
 public final class Validator {
-    private Validator(){}
+    private Validator() {
+    }
 
-    public static void validatePurchasePrice(String message){
+    public static void validatePurchasePrice(String message) {
         Integer value = validateIntegerValue(message);
         validateOverMinimumMoney(value);
         validateThousandUnitMoney(value);
     }
 
-    public static void validateNotEmptyValue(String message){
-        if (message==null || message.isBlank()){
+    public static void validateNotEmptyValue(String message) {
+        if (message == null || message.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_ERROR.getMessage());
         }
     }
 
-    public static Integer validateIntegerValue(String message){
-        try{
+    public static Integer validateIntegerValue(String message) {
+        try {
             return Integer.parseInt(message);
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
         }
     }
 
-    public static void validateOverMinimumMoney(Integer money){
-        if (money < 1000){
+    // TODO : 매직넘버 처리 해라 1000 , 6
+    public static void validateOverMinimumMoney(Integer money) {
+        if (money < 1000) {
             throw new IllegalArgumentException(ErrorMessage.PRICE_NOT_IN_RANGE.getMessage());
         }
     }
 
-    public static void validateThousandUnitMoney(Integer money){
-        if (money % 1000 != 0){
+    public static void validateThousandUnitMoney(Integer money) {
+        if (money % 1000 != 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PRICE_UNIT.getMessage());
         }
     }
 
 
-    public static void validateTargetLottoLength(List<String> numbers){
-        if (numbers.size() != 6){
+    public static void validateTargetLottoLength(List<String> numbers) {
+        if (numbers.size() != 6) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         }
     }
-    
+
 }
