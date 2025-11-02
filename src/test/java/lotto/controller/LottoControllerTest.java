@@ -110,11 +110,28 @@ class LottoControllerTest extends NsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1,s3,4,5,5,6", "1,x,3,3,4,4"})
+    @ValueSource(strings = {"1,s3,4,5,6,7", "1,x,3,4,5,6"})
     void 당첨로또_숫자아님_예외_테스트(String text) {
         assertSimpleTest(() -> {
             runException("8000", text);
             assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1,3,4,5,5,6", "1,1,1,1,1,1"})
+    void 당첨로또_중복_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000", text);
+            assertThat(output()).contains(ErrorMessage.NOT_UNIQUE_LOTTO_NUMBER.getMessage());
+        });
+    }
+
+    @Test
+    void 당첨로또_범위내_테스트() {
+        assertSimpleTest(() -> {
+            runException("8000", "1,300,4,5,5,6");
+            assertThat(output()).contains(ErrorMessage.LOTTO_NUMBER_NOT_IN_RANGE.getMessage());
         });
     }
 
@@ -136,6 +153,21 @@ class LottoControllerTest extends NsTest {
         });
     }
 
+    @Test
+    void 보너스번호_범위내아님_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("8000", "1,2,3,4,5,6", "89");
+            assertThat(output()).contains(ErrorMessage.LOTTO_NUMBER_NOT_IN_RANGE.getMessage());
+        });
+    }
+
+    @Test
+    void 보너스번호_로또_중복_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("8000", "1,2,3,4,5,6", "6");
+            assertThat(output()).contains(ErrorMessage.NOT_UNIQUE_BONUS_NUMBER.getMessage());
+        });
+    }
 
     @Override
     public void runMain() {
