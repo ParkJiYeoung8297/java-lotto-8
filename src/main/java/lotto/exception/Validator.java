@@ -68,4 +68,11 @@ public final class Validator {
         }
     }
 
+    public static void validateUniqueNumber(List<Integer> numbers)  {
+        Set<Integer> nums = new HashSet<>(numbers);
+        if (nums.size() != Constant.LOTTO_LENGTH) {
+            throw new IllegalArgumentException(ErrorMessage.NOT_UNIQUE_LOTTO_NUMBER.getMessage());
+        }
+    }
+
 }

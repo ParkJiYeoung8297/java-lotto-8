@@ -88,6 +88,7 @@ public class LottoController {
             List<Integer> numbers = changeToInt(List.of(view.requestTargetLotto().split(Constant.SPLIT_DELIMETER)));
             Validator.validateLottoLength(numbers);
             Validator.validateNumbersAllInRange(numbers);
+            Validator.validateUniqueNumber(numbers);
             return numbers;
         } catch (IllegalArgumentException e) {
             view.printMessage(e.getMessage());
