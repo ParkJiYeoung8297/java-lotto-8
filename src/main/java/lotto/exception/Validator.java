@@ -1,7 +1,10 @@
 package lotto.exception;
 
 import lotto.util.Constant;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class Validator {
 
@@ -40,10 +43,28 @@ public final class Validator {
         }
     }
 
-
-    public static void validateTargetLottoLength(List<String> numbers) {
+    public static void validateLottoLength(List<Integer> numbers) {
         if (numbers.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
+        }
+    }
+
+    public static void validateUniqueBonusNumber(List<Integer> numbers, Integer num) {
+        if (numbers.contains(num)) {
+            throw new IllegalArgumentException(ErrorMessage.NOT_UNIQUE_BONUS_NUMBER.getMessage());
+        }
+    }
+
+    public static void validateNumberInRange(Integer num)  {
+        if (num < Constant.MIN_VALUE || num > Constant.MAX_VALUE){
+            throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_NOT_IN_RANGE.getMessage());
+        }
+    }
+
+    public static void validateNumbersAllInRange(List<Integer> numbers)  {
+        for (int num : numbers){
+            Validator.validateNotEmptyValue(Integer.toString(num));
+            validateNumberInRange(num);
         }
     }
 

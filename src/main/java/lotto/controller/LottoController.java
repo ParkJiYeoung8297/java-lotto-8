@@ -22,7 +22,7 @@ public class LottoController {
         purchaseLotto();
 
         List<Integer> targetLotto = inputTargetLotto();
-        Integer bonusNumber = inputBonusNumber();
+        Integer bonusNumber = inputBonusNumber(targetLotto);
 
         if (targetLotto != null && bonusNumber != null) {
             ResultDto resultDto = lottoService.generateResult(targetLotto, bonusNumber);
@@ -59,12 +59,12 @@ public class LottoController {
         return null;
     }
 
-    public Integer inputBonusNumber() {
+    public Integer inputBonusNumber(List<Integer> targetLotto) {
         Integer number = null;
         int count = 1;
 
         while (number == null && count <= 5) {
-            number = getBonusNumber();
+            number = getBonusNumber(targetLotto);
             count++;
         }
 
@@ -85,18 +85,22 @@ public class LottoController {
 
     private List<Integer> getTargetLotto() {
         try {
-            List<String> numbers = List.of(view.requestTargetLotto().split(Constant.SPLIT_DELIMETER));
-            Validator.validateTargetLottoLength(numbers);
-            return changeToInt(numbers);
+            List<Integer> numbers = changeToInt(List.of(view.requestTargetLotto().split(Constant.SPLIT_DELIMETER)));
+            Validator.validateLottoLength(numbers);
+            Validator.validateNumbersAllInRange(numbers);
+            return numbers;
         } catch (IllegalArgumentException e) {
             view.printMessage(e.getMessage());
             return null;
         }
     }
 
-    private Integer getBonusNumber() {
+    private Integer getBonusNumber(List<Integer> numbers) {
         try {
-            return Integer.parseInt(view.requestBonusNumber());
+            Integer bonusNum = Integer.parseInt(view.requestBonusNumber());
+            Validator.validateNumberInRange(bonusNum);
+            Validator.validateUniqueBonusNumber(numbers, bonusNum);
+            return bonusNum;
         } catch (IllegalArgumentException e) {
             view.printMessage(e.getMessage());
             return null;
