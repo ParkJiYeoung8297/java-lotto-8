@@ -33,15 +33,15 @@ class LottoControllerTest extends NsTest{
                             "[2, 13, 22, 32, 38, 45]",
                             "[1, 3, 5, 14, 22, 45]",
                             "당첨 번호를 입력해 주세요.",
-                            "보너스 번호를 입력해 주세요."
-//                            "당첨 통계",
-//                            "---",
-//                            "3개 일치 (5,000원) - 1개",
-//                            "4개 일치 (50,000원) - 0개",
-//                            "5개 일치 (1,500,000원) - 0개",
-//                            "5개 일치, 보너스 볼 일치 (30,000,000원) - 0개",
-//                            "6개 일치 (2,000,000,000원) - 0개",
-//                            "총 수익률은 62.5%입니다."
+                            "보너스 번호를 입력해 주세요.",
+                            "당첨 통계",
+                            "---",
+                            "3개 일치 (5,000원) - 1개",
+                            "4개 일치 (50,000원) - 0개",
+                            "5개 일치 (1,500,000원) - 0개",
+                            "5개 일치, 보너스 볼 일치 (30,000,000원) - 0개",
+                            "6개 일치 (2,000,000,000원) - 0개",
+                            "총 수익률은 62.5%입니다."
                     );
                 },
                 List.of(8, 21, 23, 41, 42, 43),
@@ -106,6 +106,15 @@ class LottoControllerTest extends NsTest{
         assertSimpleTest(() -> {
             runException("8000",text);
             assertThat(output()).contains(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1,s3,4,5,5,6", "1,x,3,3,4,4"})
+    void 당첨로또_숫자아님_예외_테스트(String text) {
+        assertSimpleTest(() -> {
+            runException("8000",text);
+            assertThat(output()).contains(ErrorMessage.NOT_NUMBER_ERROR.getMessage());
         });
     }
 
