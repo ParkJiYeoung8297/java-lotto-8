@@ -17,11 +17,7 @@ public class LottoService {
 
     public LottoDto generateRandomLottos(int price) {
         int amount = calculateLottoCount(price);
-
-        for (int i = 1; i <= amount; i++) {
-            Lotto lotto = new Lotto(RandomGenerator.getRandomLottoNumber());
-            randomLottos.add(lotto);
-        }
+        addRandomLottos(amount);
 
         List<List<Integer>> lottoNumbers = randomLottos.stream()
                 .map(Lotto::getNumbers)
@@ -33,6 +29,17 @@ public class LottoService {
         Winning winning = new Winning(randomLottos);
         winning.calculateWinning(targetLotto, bonusNumber);
         return new ResultDto(winning.getRecord(), winning.calculateWinningRate());
+    }
+
+    private void addRandomLottos(int amount){
+        for (int i = 1; i <= amount; i++) {
+            Lotto lotto = makeLotto();
+            randomLottos.add(lotto);
+        }
+    }
+
+    private Lotto makeLotto(){
+        return Lotto.buildLotto(RandomGenerator.getRandomLottoNumber());
     }
 
     private int calculateLottoCount(int price) {

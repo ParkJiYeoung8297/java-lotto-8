@@ -55,7 +55,6 @@ public class Winning {
         return type;
     }
 
-
     // record 반환
     public Map<String, Integer> getRecord() {
         Map<String, Integer> finalRecord = new LinkedHashMap<>();

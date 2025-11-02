@@ -9,29 +9,33 @@ import java.util.*;
 public class Lotto {
     private final List<Integer> numbers;
 
-    public Lotto(List<Integer> numbers) {
+    private Lotto(List<Integer> numbers) {
+        this.numbers = new ArrayList<>(numbers);
+    }
+
+    public static Lotto buildLotto(List<Integer> numbers){
         validateLottoLength(numbers);
         validateUniqueNumber(numbers);
         validateNumberInRange(numbers);
-
-        this.numbers = new ArrayList<>(numbers);
-        Collections.sort(this.numbers);
+        Lotto lotto = new Lotto(numbers);
+        Collections.sort(lotto.numbers);
+        return lotto;
     }
 
-    private void validateLottoLength(List<Integer> numbers) {
+    private static void validateLottoLength(List<Integer> numbers) {
         if (numbers.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         }
     }
 
-    private void validateUniqueNumber(List<Integer> numbers)  {
+    private static void validateUniqueNumber(List<Integer> numbers)  {
         Set<Integer> nums = new HashSet<>(numbers);
         if (nums.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.NOT_UNIQUE_LOTTO_NUMBER.getMessage());
         }
     }
 
-    private void validateNumberInRange(List<Integer> numbers)  {
+    private static void validateNumberInRange(List<Integer> numbers)  {
         for (int num : numbers){
             Validator.validateNotEmptyValue(Integer.toString(num));
             if (num < Constant.MIN_VALUE || num > Constant.MAX_VALUE){
