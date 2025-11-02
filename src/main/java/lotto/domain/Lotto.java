@@ -2,6 +2,7 @@ package lotto.domain;
 
 import lotto.exception.ErrorMessage;
 import lotto.exception.Validator;
+import lotto.util.Constant;
 
 import java.util.*;
 
@@ -12,19 +13,20 @@ public class Lotto {
         validateLottoLength(numbers);
         validateUniqueNumber(numbers);
         validateNumberInRange(numbers);
+
         this.numbers = new ArrayList<>(numbers);
         Collections.sort(this.numbers);
     }
 
     private void validateLottoLength(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         }
     }
 
     private void validateUniqueNumber(List<Integer> numbers)  {
         Set<Integer> nums = new HashSet<>(numbers);
-        if (nums.size() != 6) {
+        if (nums.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.NOT_UNIQUE_LOTTO_NUMBER.getMessage());
         }
     }
@@ -32,13 +34,11 @@ public class Lotto {
     private void validateNumberInRange(List<Integer> numbers)  {
         for (int num : numbers){
             Validator.validateNotEmptyValue(Integer.toString(num));
-            if (num < 1 || num > 45){
+            if (num < Constant.MIN_VALUE || num > Constant.MAX_VALUE){
                 throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_NOT_IN_RANGE.getMessage());
             }
         }
     }
-
-
 
     // 숫자 비교
     public int compareLotto(List<Integer> num) {
@@ -49,15 +49,15 @@ public class Lotto {
     }
 
     // 보너스 번호 맞춤 여부
-    public int checkBonusNumber(Integer bonusNum) {
+    public boolean checkBonusNumber(Integer bonusNum) {
         if (numbers.contains(bonusNum) == true) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 
     public List<Integer> getNumbers() {
-        return numbers;
+        return List.copyOf(numbers);
     }
 
 }

@@ -1,8 +1,10 @@
 package lotto.exception;
 
+import lotto.util.Constant;
 import java.util.List;
 
 public final class Validator {
+
     private Validator() {
     }
 
@@ -26,22 +28,21 @@ public final class Validator {
         }
     }
 
-    // TODO : 매직넘버 처리 해라 1000 , 6
     public static void validateOverMinimumMoney(Integer money) {
-        if (money < 1000) {
+        if (money < Constant.MONEY_UNIT) {
             throw new IllegalArgumentException(ErrorMessage.PRICE_NOT_IN_RANGE.getMessage());
         }
     }
 
     public static void validateThousandUnitMoney(Integer money) {
-        if (money % 1000 != 0) {
+        if (money % Constant.MONEY_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PRICE_UNIT.getMessage());
         }
     }
 
 
     public static void validateTargetLottoLength(List<String> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != Constant.LOTTO_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_LENGTH_ERROR.getMessage());
         }
     }

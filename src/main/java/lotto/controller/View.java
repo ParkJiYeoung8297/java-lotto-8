@@ -39,12 +39,13 @@ public class View {
     }
 
     public void printResult(ResultDto resultDto) {
-
         printMessage(Message.PRINT_RESULT_HEADER);
+
         for (String prizeMessage : resultDto.getWinningRecord().keySet()) {
             int count = resultDto.getWinningRecord().get(prizeMessage);
             printMessage(String.format(Message.PRINT_RESULT_LOTTO, prizeMessage, count));
         }
+
         printMessage(String.format(Message.PRINT_LOTTO_RETURNS, resultDto.getReturnRate()));
     }
 

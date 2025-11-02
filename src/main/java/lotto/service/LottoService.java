@@ -2,6 +2,7 @@ package lotto.service;
 
 import lotto.domain.Lotto;
 import lotto.domain.Winning;
+import lotto.util.Constant;
 import lotto.util.RandomGenerator;
 
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ public class LottoService {
 
     public LottoDto generateRandomLottos(int price) {
         int amount = calculateLottoCount(price);
+
         for (int i = 1; i <= amount; i++) {
             Lotto lotto = new Lotto(RandomGenerator.getRandomLottoNumber());
             randomLottos.add(lotto);
         }
 
-        // TODO : 이거 정렬해서 출력해야함!!!!
         List<List<Integer>> lottoNumbers = randomLottos.stream()
                 .map(Lotto::getNumbers)
                 .toList();
@@ -35,6 +36,6 @@ public class LottoService {
     }
 
     private int calculateLottoCount(int price) {
-        return price / 1000;
-    }  // TODO: 이거 매직넘버해라
+        return price / Constant.MONEY_UNIT;
+    }
 }
