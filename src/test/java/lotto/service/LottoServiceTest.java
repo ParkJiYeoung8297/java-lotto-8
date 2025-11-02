@@ -1,6 +1,5 @@
 package lotto.service;
 
-import lotto.domain.Lotto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -38,10 +37,11 @@ class LottoServiceTest {
     }
 
     @Test
-    void 당첨여부계산_테스트() {
+    void 로또_결과_반환_테스트() {
         LottoService lottoService = new LottoService();
         assertRandomUniqueNumbersInRangeTest(
                 () -> {
+                    lottoService.generateRandomLottos(8000);
                     ResultDto result = lottoService.generateResult(List.of(1, 2, 3, 4, 5, 6), 7);
                     Map<String, Integer> expected = new LinkedHashMap<>();
                     expected.put("3개 일치 (5,000원)", 1);
@@ -51,10 +51,8 @@ class LottoServiceTest {
                     expected.put("6개 일치 (2,000,000,000원)", 0);
                     expected.put("3개 일치 (5,000원)", 1);
 
-
-                    assertThat(result.getWinningRecord())
-                            .isEqualTo(expected);
-                    Assertions.assertEquals(62.5, result.getReturnRate());
+                    assertThat(result.getWinningRecord()).isEqualTo(expected);
+                    Assertions.assertEquals("62.5", result.getReturnRate());
                 },
                 List.of(8, 21, 23, 41, 42, 43),
                 List.of(3, 5, 11, 16, 32, 38),
