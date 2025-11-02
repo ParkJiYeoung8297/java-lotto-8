@@ -8,8 +8,8 @@ public class ResultDto {
     private String returnRate;
 
     public ResultDto(Map<String, Integer> winningRecord, String returnRate){
-        this.winningRecord = new LinkedHashMap<>();
-        this.returnRate  = "";
+        this.winningRecord = winningRecord;
+        this.returnRate  = returnRate;
     }
 
     public Map<String, Integer> getWinningRecord(){

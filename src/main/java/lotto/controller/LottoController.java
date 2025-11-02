@@ -2,7 +2,9 @@ package lotto.controller;
 
 import lotto.exception.Validator;
 import lotto.service.LottoService;
+import lotto.service.ResultDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LottoController {
@@ -18,8 +20,12 @@ public class LottoController {
 
     public void doLotto(){
         purchaseLotto();
-        inputTargetLotto();
-        inputBonusNumber();
+        List<Integer> targetLotto = inputTargetLotto();
+        Integer bonusNumber = inputBonusNumber();
+        if (targetLotto != null && bonusNumber != null){
+            ResultDto resultDto=lottoService.generateResult(targetLotto, bonusNumber);
+            view.printResult(resultDto);
+        }
     }
 
     public void purchaseLotto(){
@@ -34,18 +40,20 @@ public class LottoController {
         }
     }
 
-    public void inputTargetLotto(){
-        List<String> numbers = null;
+    public List<Integer> inputTargetLotto(){
+        List<Integer> numbers = null;
         int count = 1;
         while (numbers == null && count <= 5){
             numbers = getTargetLotto();
             count++;
         }
         if (numbers != null){
+            return numbers;
         }
+        return null;
     }
 
-    public void inputBonusNumber(){
+    public Integer inputBonusNumber(){
         Integer number = null;
         int count = 1;
         while (number == null && count <= 5){
@@ -53,7 +61,9 @@ public class LottoController {
             count++;
         }
         if (number != null){
+            return number;
         }
+        return null;
     }
 
     private Integer getPurchasePrice(){
@@ -66,11 +76,11 @@ public class LottoController {
         }
     }
 
-    private List<String> getTargetLotto(){
+    private List<Integer> getTargetLotto(){
         try {
             List<String> numbers = List.of(view.requestTargetLotto().split(splitDelimeter));
             Validator.validateTargetLottoLength(numbers);
-            return numbers;
+            return changeToInt(numbers);
         }catch(IllegalArgumentException e)
         {
             view.printMessage(e.getMessage());
@@ -87,6 +97,15 @@ public class LottoController {
             return null;
         }
     }
+
+    private List<Integer> changeToInt(List<String> numbers){
+        List<Integer> nums = new ArrayList<>();
+        for (String number : numbers){
+            nums.add(Validator.validateIntegerValue(number));
+        }
+        return nums;
+    }
+
 
 
 

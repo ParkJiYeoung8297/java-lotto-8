@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoService {
-    private List<Lotto> randomLottos = new ArrayList<>();
+    private List<Lotto> randomLottos;
 
+    public LottoService(){
+        this.randomLottos = new ArrayList<>();
+    }
     public LottoDto generateRandomLottos(int price){
         int amount = calculateLottoCount(price);
         for (int i=1; i <= amount; i++){

@@ -10,16 +10,18 @@ public class Winning {
     private Map<Lottery,Integer> records;
     private int total;
 
-    public Winning(List<Lotto> lottos){
-        this.randomLottos = lottos;
-        this.records = new LinkedHashMap<>(0);
+    public Winning(List<Lotto> randomLottos){
+        this.randomLottos = randomLottos;
+        this.records = new LinkedHashMap<>();
+        for (Lottery lottery : Lottery.values()) {
+            this.records.put(lottery, 0);
+        }
         this.total = 0;
     }
 
     // record 갱신
     private void updateRecord(Lottery lottery){
         records.replace(lottery, records.get(lottery)+1);
-
     }
 
     // record 갱신
@@ -36,10 +38,6 @@ public class Winning {
             updateRecord(lottery);
             updateTotal(lottery.getPrize());
         }
-    }
-
-    public Map<Lottery, Integer> getRecords() {
-        return records;
     }
 
     private Lottery getPrizeType(int count, int bonusCheck){
@@ -60,6 +58,9 @@ public class Winning {
     public Map<String,Integer> getRecord(){
         Map<String,Integer> finalRecord = new LinkedHashMap<>();
         for (Lottery lottery : records.keySet()){
+            if (lottery==Lottery.NOT_PRIZE){
+                continue;
+            }
             finalRecord.put(lottery.getMessage(), records.get(lottery));
         }
         return finalRecord;
@@ -68,12 +69,11 @@ public class Winning {
 
     // 수익률 계산
     public String calculateWinningRate(){
-        float total = 0f;
         int count = 0;
         for (int record : records.values()){
             count += record;
         }
-        return String.format("%.2f", (float)count / total);
+        return String.format("%.1f", ((float)total / (float)count)/10.0);
     }
 }
 

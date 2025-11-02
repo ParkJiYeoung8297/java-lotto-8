@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import lotto.exception.ErrorMessage;
 import lotto.exception.Validator;
 import lotto.service.LottoDto;
+import lotto.service.ResultDto;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,6 +36,16 @@ public class View {
         for (List<Integer> lotto : lottoDto.getRandomLottos()){
             printIntegerList(lotto);
         }
+    }
+
+    public void printResult(ResultDto resultDto){
+
+        printMessage(Message.PRINT_RESULT_HEADER);
+        for(String prizeMessage : resultDto.getWinningRecord().keySet()){
+            int count = resultDto.getWinningRecord().get(prizeMessage);
+            printMessage(String.format(Message.PRINT_RESULT_LOTTO, prizeMessage, count));
+        }
+        printMessage(String.format(Message.PRINT_LOTTO_RETURNS, resultDto.getReturnRate()));
     }
 
     private String getInputMessage(){
