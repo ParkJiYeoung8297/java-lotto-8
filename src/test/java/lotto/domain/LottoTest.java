@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,6 +30,13 @@ class LottoTest {
     @Test
     void 로또_번호_중복_예외_테스트() {
         assertThatThrownBy(() -> Lotto.buildLotto(List.of(1, 2, 3, 4, 5, 5)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("로또 번호에 null이 있으면 예외가 발생한다.")
+    @Test
+    void 로또_null값_예외_테스트() {
+        assertThatThrownBy(() -> Lotto.buildLotto(Arrays.asList(1, 2, null, 4, 5, 5)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

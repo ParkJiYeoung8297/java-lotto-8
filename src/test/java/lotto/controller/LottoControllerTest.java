@@ -134,7 +134,7 @@ class LottoControllerTest extends NsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", " "})
+    @ValueSource(strings = {"", " ","null"})
     void 보너스번호_공백_예외_테스트(String text) {
         assertSimpleTest(() -> {
             runException("8000", "1,2,3,4,5,6", text);

@@ -26,20 +26,19 @@ public class LottoService {
     }
 
     public ResultDto generateResult(List<Integer> targetLotto, Integer bonusNumber) {
-        ;
         Record record = Record.buildRecord();
         record.calculateWinning(targetLotto, bonusNumber, randomLottos);
         return new ResultDto(record.getPrizeRecord(), record.calculateWinningRate());
     }
 
-    private void addRandomLottos(int amount) {
+    private void addRandomLottos(int amount){
         for (int i = 1; i <= amount; i++) {
             Lotto lotto = makeLotto();
             randomLottos.add(lotto);
         }
     }
 
-    private Lotto makeLotto() {
+    private Lotto makeLotto(){
         return Lotto.buildLotto(RandomGenerator.getRandomLottoNumber());
     }
 
